@@ -110,28 +110,39 @@ bird1 = this.physics.add.sprite(128, 128, 'bird1', 'down1.png');
    
     this.cameras.main.setZoom(2);
     this.cameras.main.startFollow(player);
-    for (let i = 0; i < 10; i++) {
-      let monsterType = Phaser.Utils.Array.GetRandom(monsterTypes); // Randomly select a monster sprite
-  
-      const monster = this.physics.add.sprite(
-        Phaser.Math.Between(100, 700), // random X position between 100 and 700
-        Phaser.Math.Between(100, 500), // random Y position between 100 and 500
-        monsterType, // use the randomly selected monster sprite
-        'down1.png' // replace with your animation key
-      );
-  
-      monster.play(`${monsterType}-down`); // Play the corresponding animation for the monster
-      this.physics.add.collider(monster, backgroundLayer);
-      this.physics.add.collider(monster, interactiveLayer);
-  
-      // Add collision between the monster and the player
-      this.physics.add.collider(monster, player);
-      this.physics.add.collider(monster, golem1);
-this.physics.add.collider(monster, bird1);
-this.physics.add.collider(monster, cacto);
+for (let i = 0; i < 400; i++) {
+  let monsterType = Phaser.Utils.Array.GetRandom(monsterTypes); // Randomly select a monster sprite
 
-      monsters.push(monster);
-    }
+  const monster = this.physics.add.sprite(
+    Phaser.Math.Between(100, 700), // random X position between 100 and 700
+    Phaser.Math.Between(100, 500), // random Y position between 100 and 500
+    monsterType, // use the randomly selected monster sprite
+    'down1.png' // replace with your animation key
+  );
+
+  monster.play(`${monsterType}-down`); // Play the corresponding animation for the monster
+  this.physics.add.collider(monster, backgroundLayer);
+  this.physics.add.collider(monster, interactiveLayer);
+
+  // Add collision between the monster and the player
+  this.physics.add.collider(monster, player);
+  this.physics.add.collider(monster, golem1);
+  this.physics.add.collider(monster, bird1);
+  this.physics.add.collider(monster, cacto);
+
+  // Set the speed of the monster
+  const speed = Phaser.Math.Between(50, 200); // Random speed between 50 and 200
+  const angle = Phaser.Math.Between(0, 360); // Random angle of movement
+
+  // Set the velocity based on the speed and angle
+  monster.body.setVelocity(
+    Math.cos(Phaser.Math.DEG_TO_RAD * angle) * speed,
+    Math.sin(Phaser.Math.DEG_TO_RAD * angle) * speed
+  );
+
+  monsters.push(monster);
+}
+
   
   }
   
